@@ -1,0 +1,1570 @@
+{
+  "templateSetName": "Fluxo padrão: Loteamento -> Moradias -> Termo de Obra -> Escritura",
+  "activities": [
+    {
+      "code": "L01",
+      "phase": "1. Loteamento",
+      "activity": "Contratação da equipa de projetistas",
+      "internalResponsibleName": null,
+      "externalEntity": "FOCUSGROUP",
+      "durationDays": 15,
+      "predecessorCodes": [],
+      "lagDays": 0,
+      "deliverable": "Contratos de prestação de serviços"
+    },
+    {
+      "code": "L02",
+      "phase": "1. Loteamento",
+      "activity": "Execução do projeto de loteamento",
+      "internalResponsibleName": null,
+      "externalEntity": "FOCUSGROUP",
+      "durationDays": 60,
+      "predecessorCodes": [
+        "L01"
+      ],
+      "lagDays": 0,
+      "deliverable": "Projeto de loteamento completo"
+    },
+    {
+      "code": "L03",
+      "phase": "1. Loteamento",
+      "activity": "Submissão do processo de loteamento na Câmara",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "FOCUSGROUP",
+      "durationDays": 5,
+      "predecessorCodes": [
+        "L02"
+      ],
+      "lagDays": 0,
+      "deliverable": "N.º de processo da Câmara"
+    },
+    {
+      "code": "L04",
+      "phase": "1. Loteamento",
+      "activity": "Apreciação e aprovação do loteamento",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 120,
+      "predecessorCodes": [
+        "L03"
+      ],
+      "lagDays": 0,
+      "deliverable": "Deliberação de aprovação"
+    },
+    {
+      "code": "L05",
+      "phase": "1. Loteamento",
+      "activity": "Emissão do alvará de loteamento",
+      "internalResponsibleName": "JORGE",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 20,
+      "predecessorCodes": [
+        "L04"
+      ],
+      "lagDays": 0,
+      "deliverable": "Alvará de loteamento n.º"
+    },
+    {
+      "code": "L06",
+      "phase": "1. Loteamento",
+      "activity": "Contratação do empreiteiro de infraestruturas",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 30,
+      "predecessorCodes": [
+        "L02"
+      ],
+      "lagDays": 0,
+      "deliverable": "Contrato de empreitada de infraestruturas"
+    },
+    {
+      "code": "L07",
+      "phase": "1. Loteamento",
+      "activity": "Comunicação da data de início da obra de loteamento",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 2,
+      "predecessorCodes": [
+        "L05"
+      ],
+      "lagDays": 0,
+      "deliverable": "Comprovativo de comunicação"
+    },
+    {
+      "code": "L08",
+      "phase": "1. Loteamento",
+      "activity": "Execução da obra de loteamento (infraestruturas)",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 180,
+      "predecessorCodes": [
+        "L06",
+        "L07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Auto de conclusão das infraestruturas"
+    },
+    {
+      "code": "L09",
+      "phase": "1. Loteamento",
+      "activity": "Receção das infraestruturas pela Câmara",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 30,
+      "predecessorCodes": [
+        "L08"
+      ],
+      "lagDays": 0,
+      "deliverable": "Auto de receção provisória"
+    },
+    {
+      "code": "L10",
+      "phase": "1. Loteamento",
+      "activity": "Licença final de loteamento",
+      "internalResponsibleName": "JORGE",
+      "externalEntity": "SOMOVE",
+      "durationDays": 30,
+      "predecessorCodes": [
+        "L09"
+      ],
+      "lagDays": 0,
+      "deliverable": "N.º da licença final de loteamento"
+    },
+    {
+      "code": "L11",
+      "phase": "1. Loteamento",
+      "activity": "Destaque dos lotes / registo predial",
+      "internalResponsibleName": "ALEXANDRA",
+      "externalEntity": "FOCUSGROUP",
+      "durationDays": 30,
+      "predecessorCodes": [
+        "L10"
+      ],
+      "lagDays": 0,
+      "deliverable": "CRP e CPU de cada lote"
+    },
+    {
+      "code": "M01",
+      "phase": "2. Moradias",
+      "activity": "Execução do projeto de arquitetura",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "FOCUSGROUP",
+      "durationDays": 40,
+      "predecessorCodes": [
+        "L02"
+      ],
+      "lagDays": 0,
+      "deliverable": "Projeto de arquitetura"
+    },
+    {
+      "code": "M02",
+      "phase": "2. Moradias",
+      "activity": "Execução do projeto de estrutura e especialidades",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "TIAGO",
+      "durationDays": 30,
+      "predecessorCodes": [
+        "M01"
+      ],
+      "lagDays": 0,
+      "deliverable": "Projetos de especialidades"
+    },
+    {
+      "code": "M03",
+      "phase": "2. Moradias",
+      "activity": "Submissão dos projetos — Comunicação Prévia",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "FOCUSGROUP",
+      "durationDays": 5,
+      "predecessorCodes": [
+        "M02",
+        "L05"
+      ],
+      "lagDays": 0,
+      "deliverable": "Comprovativo de submissão (CP)"
+    },
+    {
+      "code": "M04",
+      "phase": "2. Moradias",
+      "activity": "Aprovação da Comunicação Prévia",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 20,
+      "predecessorCodes": [
+        "M03"
+      ],
+      "lagDays": 0,
+      "deliverable": "Deferência / ausência de rejeição"
+    },
+    {
+      "code": "M05",
+      "phase": "2. Moradias",
+      "activity": "Pagamento de taxas e obtenção da licença de construção",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 5,
+      "predecessorCodes": [
+        "M04"
+      ],
+      "lagDays": 0,
+      "deliverable": "N.º da licença de construção"
+    },
+    {
+      "code": "M06",
+      "phase": "2. Moradias",
+      "activity": "Contratação do empreiteiro (moradias)",
+      "internalResponsibleName": "ARISTEU - NUNO",
+      "externalEntity": null,
+      "durationDays": 30,
+      "predecessorCodes": [
+        "M02"
+      ],
+      "lagDays": 0,
+      "deliverable": "Contrato de empreitada"
+    },
+    {
+      "code": "M07",
+      "phase": "2. Moradias",
+      "activity": "Aviso de início de obra",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 5,
+      "predecessorCodes": [
+        "M05",
+        "M06"
+      ],
+      "lagDays": 0,
+      "deliverable": "Livro de obra / aviso afixado"
+    },
+    {
+      "code": "M08",
+      "phase": "2. Moradias",
+      "activity": "Execução da obra",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 300,
+      "predecessorCodes": [
+        "M07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Obra concluída"
+    },
+    {
+      "code": "M09",
+      "phase": "2. Moradias",
+      "activity": "Ramal de águas — pedido, contrato e contador",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 45,
+      "predecessorCodes": [
+        "M07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Contrato de fornecimento"
+    },
+    {
+      "code": "M10",
+      "phase": "2. Moradias",
+      "activity": "Ramal de esgotos domésticos",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 45,
+      "predecessorCodes": [
+        "M07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Ligação executada"
+    },
+    {
+      "code": "M11",
+      "phase": "2. Moradias",
+      "activity": "Ramal de esgotos pluviais",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 45,
+      "predecessorCodes": [
+        "M07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Ligação executada"
+    },
+    {
+      "code": "M12",
+      "phase": "2. Moradias",
+      "activity": "Ramal eléctrico — contrato e contador",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 60,
+      "predecessorCodes": [
+        "M07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Contrato de fornecimento"
+    },
+    {
+      "code": "M13",
+      "phase": "2. Moradias",
+      "activity": "Ramal ITED",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 30,
+      "predecessorCodes": [
+        "M07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Ligação executada"
+    },
+    {
+      "code": "M14",
+      "phase": "2. Moradias",
+      "activity": "Ramal de gás",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 45,
+      "predecessorCodes": [
+        "M07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Ligação executada"
+    },
+    {
+      "code": "M15",
+      "phase": "2. Moradias",
+      "activity": "Caixas de correio",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 10,
+      "predecessorCodes": [
+        "M08"
+      ],
+      "lagDays": 0,
+      "deliverable": "Instalação concluída"
+    },
+    {
+      "code": "T01",
+      "phase": "3. Termo de obra",
+      "activity": "Certificado energético",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": null,
+      "durationDays": 15,
+      "predecessorCodes": [
+        "M08"
+      ],
+      "lagDays": 0,
+      "deliverable": "Certificado energético (ADENE)"
+    },
+    {
+      "code": "T02",
+      "phase": "3. Termo de obra",
+      "activity": "Certificado acústico",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": null,
+      "durationDays": 15,
+      "predecessorCodes": [
+        "M08"
+      ],
+      "lagDays": 0,
+      "deliverable": "Ensaio e certificado acústico"
+    },
+    {
+      "code": "T03",
+      "phase": "3. Termo de obra",
+      "activity": "Certidão de infraestruturas",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 20,
+      "predecessorCodes": [
+        "M08",
+        "L09"
+      ],
+      "lagDays": 0,
+      "deliverable": "Certidão de infraestruturas"
+    },
+    {
+      "code": "T04",
+      "phase": "3. Termo de obra",
+      "activity": "FTH — Ficha Técnica da Habitação",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 15,
+      "predecessorCodes": [
+        "M08"
+      ],
+      "lagDays": 0,
+      "deliverable": "FTH assinada"
+    },
+    {
+      "code": "T05",
+      "phase": "3. Termo de obra",
+      "activity": "Depósito da FTH na Câmara Municipal",
+      "internalResponsibleName": "ALEXANDRA",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 5,
+      "predecessorCodes": [
+        "T04"
+      ],
+      "lagDays": 0,
+      "deliverable": "Comprovativo de depósito"
+    },
+    {
+      "code": "T06",
+      "phase": "3. Termo de obra",
+      "activity": "Pedido de licença de utilização",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 5,
+      "predecessorCodes": [
+        "T01",
+        "T02",
+        "T05"
+      ],
+      "lagDays": 0,
+      "deliverable": "Requerimento submetido"
+    },
+    {
+      "code": "T07",
+      "phase": "3. Termo de obra",
+      "activity": "Emissão da licença de utilização",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": "Câmara Municipal",
+      "durationDays": 45,
+      "predecessorCodes": [
+        "T06"
+      ],
+      "lagDays": 0,
+      "deliverable": "Alvará de utilização"
+    },
+    {
+      "code": "T08",
+      "phase": "3. Termo de obra",
+      "activity": "Propriedade horizontal (PH)",
+      "internalResponsibleName": "JORGE",
+      "externalEntity": null,
+      "durationDays": 30,
+      "predecessorCodes": [
+        "T07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Escritura/certidão de PH"
+    },
+    {
+      "code": "T09",
+      "phase": "3. Termo de obra",
+      "activity": "Modelo 1 do IMI",
+      "internalResponsibleName": "ALEXANDRA",
+      "externalEntity": "Autoridade Tributária",
+      "durationDays": 15,
+      "predecessorCodes": [
+        "T07"
+      ],
+      "lagDays": 0,
+      "deliverable": "Modelo 1 entregue"
+    },
+    {
+      "code": "T10",
+      "phase": "3. Termo de obra",
+      "activity": "CPU definitiva (caderneta predial urbana)",
+      "internalResponsibleName": "ALEXANDRA",
+      "externalEntity": "Autoridade Tributária",
+      "durationDays": 30,
+      "predecessorCodes": [
+        "T09"
+      ],
+      "lagDays": 0,
+      "deliverable": "CPU definitiva"
+    },
+    {
+      "code": "T11",
+      "phase": "3. Termo de obra",
+      "activity": "CRP definitiva (registo predial)",
+      "internalResponsibleName": "ALEXANDRA",
+      "externalEntity": "Conservatória",
+      "durationDays": 20,
+      "predecessorCodes": [
+        "T10"
+      ],
+      "lagDays": 0,
+      "deliverable": "Certidão permanente"
+    },
+    {
+      "code": "T12",
+      "phase": "3. Termo de obra",
+      "activity": "Mapa de acabamentos",
+      "internalResponsibleName": "NUNO",
+      "externalEntity": null,
+      "durationDays": 5,
+      "predecessorCodes": [
+        "M08"
+      ],
+      "lagDays": 0,
+      "deliverable": "Mapa de acabamentos"
+    },
+    {
+      "code": "E01",
+      "phase": "4. Escritura",
+      "activity": "Direitos de preferência",
+      "internalResponsibleName": "ALEXANDRA",
+      "externalEntity": null,
+      "durationDays": 15,
+      "predecessorCodes": [
+        "T11"
+      ],
+      "lagDays": 0,
+      "deliverable": "Comprovativo de não exercício"
+    },
+    {
+      "code": "E02",
+      "phase": "4. Escritura",
+      "activity": "Dossier de documentos para escritura",
+      "internalResponsibleName": "JORGE",
+      "externalEntity": null,
+      "durationDays": 5,
+      "predecessorCodes": [
+        "E01",
+        "T08",
+        "T03"
+      ],
+      "lagDays": 0,
+      "deliverable": "Dossier completo"
+    },
+    {
+      "code": "E03",
+      "phase": "4. Escritura",
+      "activity": "Marcação e realização da escritura",
+      "internalResponsibleName": "JORGE",
+      "externalEntity": null,
+      "durationDays": 15,
+      "predecessorCodes": [
+        "E02"
+      ],
+      "lagDays": 0,
+      "deliverable": "Escritura de compra e venda"
+    },
+    {
+      "code": "E04",
+      "phase": "4. Escritura",
+      "activity": "Comissão de mediação imobiliária",
+      "internalResponsibleName": "ALEXANDRA",
+      "externalEntity": null,
+      "durationDays": 5,
+      "predecessorCodes": [
+        "E03"
+      ],
+      "lagDays": 0,
+      "deliverable": "Fatura de mediação paga"
+    },
+    {
+      "code": "E05",
+      "phase": "4. Escritura",
+      "activity": "Entrega de chaves e garantias",
+      "internalResponsibleName": "ARISTEU",
+      "externalEntity": null,
+      "durationDays": 2,
+      "predecessorCodes": [
+        "E03"
+      ],
+      "lagDays": 0,
+      "deliverable": "Auto de entrega, garantias e manuais"
+    }
+  ],
+  "documents": [
+    {
+      "activityCode": "L01",
+      "description": "Propostas dos projetistas (mín. 2)",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L01",
+      "description": "Contrato de prestação de serviços assinado",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L02",
+      "description": "Levantamento topográfico",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L02",
+      "description": "Certidão do registo predial (CRP) do prédio",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L02",
+      "description": "Caderneta predial (CPU)",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L02",
+      "description": "Seguro de Responsabilidade Civil",
+      "owner": null,
+      "mandatory": true
+    },
+    {
+      "activityCode": "L02",
+      "description": "Extrato do PDM e condicionantes verificadas",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Termo de responsabilidade do arquiteto",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Declaração da Ordem dos Arquitetos válida",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Projeto de loteamento em formato digital (plataforma da CM)",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Memória descritiva e justificativa",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Peças desenhadas (implantação, síntese, levantamento)",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Certidão do registo predial atualizada",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Caderneta predial",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Planta de localização / extrato do PDM",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Ficha estatística (INE)",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L03",
+      "description": "Comprovativo de pagamento das taxas de apreciação",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L04",
+      "description": "Resposta a pedido de elementos adicionais da CM",
+      "owner": "NUNO",
+      "mandatory": false
+    },
+    {
+      "activityCode": "L04",
+      "description": "Pareceres de entidades externas (energia, águas, ANEPC)",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L05",
+      "description": "Comprovativo de pagamento das taxas de urbanização (TMU)",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L05",
+      "description": "Garantia bancária / caução das infraestruturas",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L05",
+      "description": "Requerimento de emissão de alvará",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L06",
+      "description": "Orçamentos comparados",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L06",
+      "description": "Alvará de construção do empreiteiro (IMPIC) válido",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L06",
+      "description": "Seguros de acidentes de trabalho e responsabilidade civil",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L06",
+      "description": "Contrato de empreitada assinado",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L07",
+      "description": "Livro de obra",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L07",
+      "description": "Plano de segurança e saúde",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L07",
+      "description": "Comunicação prévia de abertura de estaleiro (ACT)",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L07",
+      "description": "Termos de responsabilidade do diretor de obra e da fiscalização",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L08",
+      "description": "Autos de medição mensais",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L08",
+      "description": "Ensaios das infraestruturas",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L09",
+      "description": "Telas finais (as built) das infraestruturas",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L09",
+      "description": "Requerimento de receção provisória",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L09",
+      "description": "Auto de vistoria da Câmara",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L10",
+      "description": "Certidão de receção das infraestruturas",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L10",
+      "description": "Requerimento de licença final de loteamento",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L11",
+      "description": "Certidão do alvará de loteamento",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L11",
+      "description": "Requerimento de registo predial dos lotes",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "L11",
+      "description": "Pagamento de emolumentos da conservatória",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M01",
+      "description": "Programa base aprovado pelo cliente",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M01",
+      "description": "Levantamento do lote e condicionantes do loteamento",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Projeto de estabilidade",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Projeto de águas e esgotos",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Projeto elétrico",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Projeto ITED",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Projeto de gás",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Projeto térmico / comportamento energético (SCE)",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Projeto acústico",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Projeto de segurança contra incêndios (SCIE)",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M02",
+      "description": "Plano de acessibilidades",
+      "owner": "TIAGO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M03",
+      "description": "Termos de responsabilidade de todos os projetistas",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M03",
+      "description": "Declarações das Ordens (arquitetos e engenheiros)",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M03",
+      "description": "Projetos em formato digital para a plataforma da CM",
+      "owner": "FOCUSGROUP",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M03",
+      "description": "Certidão do registo predial do lote",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M03",
+      "description": "Caderneta predial do lote",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M03",
+      "description": "Ficha estatística (INE)",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M03",
+      "description": "Calendarização e estimativa orçamental da obra",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M03",
+      "description": "Comprovativo de pagamento das taxas de apreciação",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M04",
+      "description": "Resposta a pedido de elementos adicionais da CM",
+      "owner": "NUNO",
+      "mandatory": false
+    },
+    {
+      "activityCode": "M05",
+      "description": "Comprovativo de pagamento das taxas de licença",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M05",
+      "description": "Apólice de seguro de responsabilidade civil",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M06",
+      "description": "Alvará de construção do empreiteiro (IMPIC) válido",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M06",
+      "description": "Seguros de acidentes de trabalho e responsabilidade civil",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M06",
+      "description": "Contrato de empreitada e plano de pagamentos",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M07",
+      "description": "Livro de obra",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M07",
+      "description": "Plano de segurança e saúde",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M07",
+      "description": "Comunicação prévia de abertura de estaleiro (ACT)",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M07",
+      "description": "Termo de responsabilidade do diretor de obra",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M07",
+      "description": "Aviso publicitário afixado no lote",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M08",
+      "description": "Autos de medição / mapa de trabalhos",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M08",
+      "description": "Registos do livro de obra e fotográficos",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M08",
+      "description": "Aditamentos por alterações contratuais (se houver)",
+      "owner": "JORGE",
+      "mandatory": false
+    },
+    {
+      "activityCode": "M09",
+      "description": "Pedido de ramal de águas",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M09",
+      "description": "Comprovativo de pagamento do ramal",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M09",
+      "description": "Contrato de fornecimento e instalação do contador",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M10",
+      "description": "Pedido de ligação de esgotos domésticos",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M10",
+      "description": "Auto de ligação",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M11",
+      "description": "Pedido de ligação de esgotos pluviais",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M11",
+      "description": "Auto de ligação",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M12",
+      "description": "Ficha eletrotécnica / inspeção CERTIEL",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M12",
+      "description": "Pedido de ramal e comprovativo de pagamento",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M12",
+      "description": "Contrato de fornecimento e instalação do contador",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M13",
+      "description": "Termo de responsabilidade ITED",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M13",
+      "description": "Ficha de ensaio ITED",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M14",
+      "description": "Certificado de conformidade da instalação de gás (ITG)",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M14",
+      "description": "Contrato de fornecimento de gás",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M15",
+      "description": "Numeração de polícia atribuída pela Câmara",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "M15",
+      "description": "Caixas instaladas conforme regulamento CTT",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T01",
+      "description": "Pré-certificado SCE",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T01",
+      "description": "Certificado energético final emitido por perito",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T02",
+      "description": "Relatório de ensaio acústico in situ",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T03",
+      "description": "Requerimento de certidão de infraestruturas",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T03",
+      "description": "Telas finais das infraestruturas",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T04",
+      "description": "Ficha Técnica da Habitação preenchida e assinada",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T04",
+      "description": "Mapa de acabamentos e equipamentos",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T04",
+      "description": "Garantias dos equipamentos instalados",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T05",
+      "description": "Comprovativo de depósito da FTH na Câmara",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T06",
+      "description": "Termo de responsabilidade do diretor de obra (conformidade com o projeto)",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T06",
+      "description": "Certificado energético",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T06",
+      "description": "Certificado acústico",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T06",
+      "description": "Comprovativo de depósito da FTH",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T06",
+      "description": "Telas finais / alterações executadas em obra",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T06",
+      "description": "Requerimento e comprovativo de pagamento das taxas",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T07",
+      "description": "Auto de vistoria (se exigido pela Câmara)",
+      "owner": "NUNO",
+      "mandatory": false
+    },
+    {
+      "activityCode": "T07",
+      "description": "Alvará de utilização emitido",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T08",
+      "description": "Certidão do registo predial",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T08",
+      "description": "Caderneta predial urbana",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T08",
+      "description": "Projeto aprovado com identificação das frações",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T08",
+      "description": "Escritura ou DPA de constituição de propriedade horizontal",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T09",
+      "description": "Modelo 1 do IMI preenchido",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T09",
+      "description": "Licença de utilização",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T09",
+      "description": "Plantas das frações / do edifício",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T10",
+      "description": "Avaliação concluída pela Autoridade Tributária",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T10",
+      "description": "Caderneta predial urbana definitiva emitida",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T11",
+      "description": "Registo da construção nova na conservatória",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T11",
+      "description": "Pagamento de emolumentos",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "T12",
+      "description": "Mapa de acabamentos assinado pelo cliente",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E01",
+      "description": "Pedido de direitos de preferência (plataforma / CM)",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E01",
+      "description": "Certidão de não exercício do direito de preferência",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Certidão do registo predial definitiva",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Caderneta predial urbana definitiva",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Licença de utilização",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Certificado energético",
+      "owner": "NUNO",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Ficha Técnica da Habitação",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Certidão de infraestruturas",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Certidão de direitos de preferência",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Documentos de identificação e NIF do comprador",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E02",
+      "description": "Certidão de não dívida ao condomínio (se PH)",
+      "owner": "JORGE",
+      "mandatory": false
+    },
+    {
+      "activityCode": "E03",
+      "description": "Comprovativos de IMT e Imposto do Selo",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E03",
+      "description": "Comprovativo de pagamento do remanescente",
+      "owner": "JORGE",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E03",
+      "description": "Distrate / cancelamento de hipoteca (se aplicável)",
+      "owner": "JORGE",
+      "mandatory": false
+    },
+    {
+      "activityCode": "E04",
+      "description": "Contrato de mediação imobiliária",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E04",
+      "description": "Fatura da comissão de mediação",
+      "owner": "ALEXANDRA",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E05",
+      "description": "Auto de entrega de chaves assinado",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E05",
+      "description": "Garantia geral da obra",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E05",
+      "description": "Garantias dos eletrodomésticos",
+      "owner": "ARISTEU",
+      "mandatory": true
+    },
+    {
+      "activityCode": "E05",
+      "description": "Manuais de utilização e manutenção",
+      "owner": "ARISTEU",
+      "mandatory": true
+    }
+  ],
+  "holidays": [
+    {
+      "date": "2026-01-01",
+      "description": "Ano Novo"
+    },
+    {
+      "date": "2026-02-17",
+      "description": "Carnaval"
+    },
+    {
+      "date": "2026-04-03",
+      "description": "Sexta-feira Santa"
+    },
+    {
+      "date": "2026-04-05",
+      "description": "Páscoa"
+    },
+    {
+      "date": "2026-04-25",
+      "description": "Dia da Liberdade"
+    },
+    {
+      "date": "2026-05-01",
+      "description": "Dia do Trabalhador"
+    },
+    {
+      "date": "2026-06-04",
+      "description": "Corpo de Deus"
+    },
+    {
+      "date": "2026-06-10",
+      "description": "Dia de Portugal"
+    },
+    {
+      "date": "2026-08-15",
+      "description": "Assunção"
+    },
+    {
+      "date": "2026-10-05",
+      "description": "Implantação da República"
+    },
+    {
+      "date": "2026-11-01",
+      "description": "Todos os Santos"
+    },
+    {
+      "date": "2026-12-01",
+      "description": "Restauração da Independência"
+    },
+    {
+      "date": "2026-12-08",
+      "description": "Imaculada Conceição"
+    },
+    {
+      "date": "2026-12-25",
+      "description": "Natal"
+    },
+    {
+      "date": "2027-01-01",
+      "description": "Ano Novo"
+    },
+    {
+      "date": "2027-02-09",
+      "description": "Carnaval"
+    },
+    {
+      "date": "2027-03-26",
+      "description": "Sexta-feira Santa"
+    },
+    {
+      "date": "2027-03-28",
+      "description": "Páscoa"
+    },
+    {
+      "date": "2027-04-25",
+      "description": "Dia da Liberdade"
+    },
+    {
+      "date": "2027-05-01",
+      "description": "Dia do Trabalhador"
+    },
+    {
+      "date": "2027-05-27",
+      "description": "Corpo de Deus"
+    },
+    {
+      "date": "2027-06-10",
+      "description": "Dia de Portugal"
+    },
+    {
+      "date": "2027-08-15",
+      "description": "Assunção"
+    },
+    {
+      "date": "2027-10-05",
+      "description": "Implantação da República"
+    },
+    {
+      "date": "2027-11-01",
+      "description": "Todos os Santos"
+    },
+    {
+      "date": "2027-12-01",
+      "description": "Restauração da Independência"
+    },
+    {
+      "date": "2027-12-08",
+      "description": "Imaculada Conceição"
+    },
+    {
+      "date": "2027-12-25",
+      "description": "Natal"
+    },
+    {
+      "date": "2028-01-01",
+      "description": "Ano Novo"
+    },
+    {
+      "date": "2028-02-29",
+      "description": "Carnaval"
+    },
+    {
+      "date": "2028-04-14",
+      "description": "Sexta-feira Santa"
+    },
+    {
+      "date": "2028-04-16",
+      "description": "Páscoa"
+    },
+    {
+      "date": "2028-04-25",
+      "description": "Dia da Liberdade"
+    },
+    {
+      "date": "2028-05-01",
+      "description": "Dia do Trabalhador"
+    },
+    {
+      "date": "2028-06-15",
+      "description": "Corpo de Deus"
+    },
+    {
+      "date": "2028-06-10",
+      "description": "Dia de Portugal"
+    },
+    {
+      "date": "2028-08-15",
+      "description": "Assunção"
+    },
+    {
+      "date": "2028-10-05",
+      "description": "Implantação da República"
+    },
+    {
+      "date": "2028-11-01",
+      "description": "Todos os Santos"
+    },
+    {
+      "date": "2028-12-01",
+      "description": "Restauração da Independência"
+    },
+    {
+      "date": "2028-12-08",
+      "description": "Imaculada Conceição"
+    },
+    {
+      "date": "2028-12-25",
+      "description": "Natal"
+    }
+  ]
+}

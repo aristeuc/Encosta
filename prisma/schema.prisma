@@ -1,0 +1,192 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Users & access
+// ---------------------------------------------------------------------------
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  passwordHash  String
+  phoneWhatsapp String? // E.164, e.g. +351912345678
+  role          Role     @default(MEMBER)
+  createdAt     DateTime @default(now())
+
+  responsibleActivities ProjectActivity[]  @relation("InternalResponsible")
+  projectMemberships    ProjectMember[]
+  notificationLogs      NotificationLog[]
+}
+
+// ---------------------------------------------------------------------------
+// Reusable process templates (mirrors the PROCESSOS master sheet)
+// ---------------------------------------------------------------------------
+
+model TemplateSet {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+
+  activities ActivityTemplate[]
+  projects   Project[]
+}
+
+model ActivityTemplate {
+  id               String  @id @default(cuid())
+  templateSetId    String
+  templateSet      TemplateSet @relation(fields: [templateSetId], references: [id], onDelete: Cascade)
+  code             String // e.g. L01, M01, T01, E01
+  phase            String
+  activity         String
+  internalResponsibleName String?
+  externalEntity   String?
+  durationDays     Int
+  predecessorCodes String? // comma-separated ActivityTemplate.code within the same TemplateSet
+  lagDays          Int     @default(0)
+  deliverable      String?
+  orderIndex       Int
+
+  documents DocumentTemplate[]
+
+  @@unique([templateSetId, code])
+}
+
+model DocumentTemplate {
+  id                 String @id @default(cuid())
+  activityTemplateId String
+  activityTemplate   ActivityTemplate @relation(fields: [activityTemplateId], references: [id], onDelete: Cascade)
+  description        String
+  owner              String?
+  mandatory          Boolean @default(true)
+  orderIndex         Int
+}
+
+// ---------------------------------------------------------------------------
+// Projects (obras) — instantiated, editable copies of a template
+// ---------------------------------------------------------------------------
+
+model Project {
+  id             String   @id @default(cuid())
+  name           String
+  startDate      DateTime @db.Date
+  templateSetId  String?
+  templateSet    TemplateSet? @relation(fields: [templateSetId], references: [id])
+  driveFolderId  String?
+  driveFolderUrl String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  activities ProjectActivity[]
+  members    ProjectMember[]
+}
+
+model ProjectMember {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+}
+
+model ProjectActivity {
+  id                      String   @id @default(cuid())
+  projectId               String
+  project                 Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  code                    String
+  phase                   String
+  activity                String
+  internalResponsibleId   String?
+  internalResponsible     User?    @relation("InternalResponsible", fields: [internalResponsibleId], references: [id])
+  externalEntity          String?
+  durationDays            Int
+  predecessorCodes        String? // comma-separated ProjectActivity.code within the same Project
+  lagDays                 Int      @default(0)
+  deliverable             String?
+  orderIndex              Int
+  actualStart             DateTime? @db.Date
+  actualEnd               DateTime? @db.Date
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  documents     ProjectDocument[]
+  notifications NotificationLog[]
+
+  @@unique([projectId, code])
+}
+
+enum DocumentStatus {
+  PENDENTE
+  OBTIDO
+}
+
+model ProjectDocument {
+  id                String         @id @default(cuid())
+  projectActivityId String
+  projectActivity   ProjectActivity @relation(fields: [projectActivityId], references: [id], onDelete: Cascade)
+  description       String
+  owner             String?
+  mandatory         Boolean        @default(true)
+  status            DocumentStatus @default(PENDENTE)
+  obtainedDate      DateTime?      @db.Date
+  notes             String?
+  driveFileId       String?
+  driveFileUrl      String?
+  orderIndex        Int
+}
+
+// ---------------------------------------------------------------------------
+// Holidays (mirrors FERIADOS) — used for business-day scheduling
+// ---------------------------------------------------------------------------
+
+model Holiday {
+  id          String   @id @default(cuid())
+  date        DateTime @unique @db.Date
+  description String
+}
+
+// ---------------------------------------------------------------------------
+// Notifications (email + WhatsApp deadline alerts)
+// ---------------------------------------------------------------------------
+
+enum NotificationChannel {
+  EMAIL
+  WHATSAPP
+}
+
+enum NotificationTrigger {
+  UPCOMING_START
+  UPCOMING_END
+  OVERDUE_START
+  OVERDUE_END
+}
+
+model NotificationLog {
+  id                String   @id @default(cuid())
+  projectActivityId String
+  projectActivity   ProjectActivity @relation(fields: [projectActivityId], references: [id], onDelete: Cascade)
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel           NotificationChannel
+  trigger           NotificationTrigger
+  windowDate        DateTime @db.Date // the calendar day this alert corresponds to (dedupe key)
+  sentAt            DateTime @default(now())
+  success           Boolean  @default(true)
+  errorMessage      String?
+
+  @@unique([projectActivityId, userId, channel, trigger, windowDate])
+}
