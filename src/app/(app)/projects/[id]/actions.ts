@@ -40,20 +40,31 @@ export async function updateActivityResponsibleAction(formData: FormData) {
   revalidatePath(`/projects/${projectId}`);
 }
 
-export async function createDriveFolderAction(formData: FormData) {
+export interface CreateDriveFolderState {
+  error?: string;
+}
+
+export async function createDriveFolderAction(
+  _prevState: CreateDriveFolderState,
+  formData: FormData,
+): Promise<CreateDriveFolderState> {
   const projectId = String(formData.get("projectId") ?? "");
-  if (!projectId) return;
+  if (!projectId) return { error: "Obra inválida." };
 
   const project = await prisma.project.findUnique({ where: { id: projectId } });
-  if (!project || project.driveFolderId) return;
+  if (!project) return { error: "Obra não encontrada." };
+  if (project.driveFolderId) return {};
 
   const folder = await createProjectFolder(project.name);
-  if (folder.ok) {
-    await prisma.project.update({
-      where: { id: projectId },
-      data: { driveFolderId: folder.id, driveFolderUrl: folder.url },
-    });
+  if (!folder.ok) {
+    return { error: folder.error ?? "Falha desconhecida ao criar a pasta no Google Drive." };
   }
 
+  await prisma.project.update({
+    where: { id: projectId },
+    data: { driveFolderId: folder.id, driveFolderUrl: folder.url },
+  });
+
   revalidatePath(`/projects/${projectId}`);
+  return {};
 }

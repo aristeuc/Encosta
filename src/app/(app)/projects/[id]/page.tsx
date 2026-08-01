@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/format";
 import { isGoogleDriveConfigured } from "@/lib/googleDrive";
 import { ActivityTable } from "./ActivityTable";
 import { Gantt } from "./Gantt";
-import { createDriveFolderAction } from "./actions";
+import { DriveFolderButton } from "./DriveFolderButton";
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -39,14 +39,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                 Pasta no Drive ↗
               </a>
             ) : (
-              isGoogleDriveConfigured() && (
-                <form action={createDriveFolderAction}>
-                  <input type="hidden" name="projectId" value={project.id} />
-                  <button type="submit" className="rounded-md border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-50">
-                    Criar pasta no Drive
-                  </button>
-                </form>
-              )
+              isGoogleDriveConfigured() && <DriveFolderButton projectId={project.id} />
             )}
             <Link
               href={`/projects/${project.id}/documents`}
