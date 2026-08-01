@@ -112,7 +112,7 @@ model ProjectActivity {
   phase                   String
   activity                String
   internalResponsibleId   String?
-  internalResponsible     User?    @relation("InternalResponsible", fields: [internalResponsibleId], references: [id])
+  internalResponsible     User?    @relation("InternalResponsible", fields: [internalResponsibleId], references: [id], onDelete: SetNull)
   externalEntity          String?
   durationDays            Int
   predecessorCodes        String? // comma-separated ProjectActivity.code within the same Project
