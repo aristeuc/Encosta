@@ -20,10 +20,11 @@ export async function updateDocumentAction(formData: FormData) {
   const obtainedDate = parseDateInput(formData.get("obtainedDate"));
   const notes = String(formData.get("notes") ?? "").trim() || null;
   const driveFileUrl = String(formData.get("driveFileUrl") ?? "").trim() || null;
+  const responsibleUserId = String(formData.get("responsibleUserId") ?? "").trim() || null;
 
   await prisma.projectDocument.update({
     where: { id: documentId },
-    data: { status, obtainedDate, notes, driveFileUrl },
+    data: { status, obtainedDate, notes, driveFileUrl, responsibleUserId },
   });
 
   revalidatePath(`/projects/${projectId}/documents`);

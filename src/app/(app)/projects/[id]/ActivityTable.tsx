@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { ProjectActivityWithSchedule } from "@/lib/schedule";
 import { ACTIVITY_STATUS_LABELS } from "@/lib/cpm";
 import { formatDate, toInputDate } from "@/lib/format";
-import { updateActivityDatesAction, updateActivityResponsibleAction } from "./actions";
+import { updateActivityDatesAction, updateActivityDetailsAction, updateActivityResponsibleAction } from "./actions";
 
 const STATUS_STYLES: Record<string, string> = {
   CONCLUIDO: "bg-emerald-50 text-emerald-700",
@@ -31,6 +31,8 @@ export function ActivityTable({
             <th className="px-3 py-2">ID</th>
             <th className="px-3 py-2">Atividade</th>
             <th className="px-3 py-2">Responsável</th>
+            <th className="px-3 py-2">Entidade externa</th>
+            <th className="px-3 py-2">Duração (dias)</th>
             <th className="px-3 py-2">Início previsto</th>
             <th className="px-3 py-2">Fim previsto</th>
             <th className="px-3 py-2">Início real</th>
@@ -62,7 +64,9 @@ function ActivityRow({
 }) {
   const datesFormRef = useRef<HTMLFormElement>(null);
   const responsibleFormRef = useRef<HTMLFormElement>(null);
+  const detailsFormRef = useRef<HTMLFormElement>(null);
   const datesFormId = `dates-form-${a.id}`;
+  const detailsFormId = `details-form-${a.id}`;
 
   return (
     <tr className={a.schedule.isCritical && a.schedule.status !== "CONCLUIDO" ? "bg-red-50/40" : undefined}>
@@ -90,6 +94,35 @@ function ActivityRow({
             ))}
           </select>
         </form>
+      </td>
+      <td className="px-3 py-2">
+        {/* Hidden form: both fields below reference it via the `form` attribute. */}
+        <form ref={detailsFormRef} id={detailsFormId} action={updateActivityDetailsAction}>
+          <input type="hidden" name="activityId" value={a.id} />
+          <input type="hidden" name="projectId" value={projectId} />
+        </form>
+        <input
+          key={`entity-${a.externalEntity ?? ""}`}
+          type="text"
+          form={detailsFormId}
+          name="externalEntity"
+          placeholder="— interno —"
+          defaultValue={a.externalEntity ?? ""}
+          onBlur={() => detailsFormRef.current?.requestSubmit()}
+          className="w-32 rounded border border-slate-200 px-1.5 py-1 text-xs"
+        />
+      </td>
+      <td className="px-3 py-2">
+        <input
+          key={`duration-${a.durationDays}`}
+          type="number"
+          min={1}
+          form={detailsFormId}
+          name="durationDays"
+          defaultValue={a.durationDays}
+          onBlur={() => detailsFormRef.current?.requestSubmit()}
+          className="w-16 rounded border border-slate-200 px-1.5 py-1 text-xs"
+        />
       </td>
       <td className="whitespace-nowrap px-3 py-2 text-slate-600">{formatDate(a.schedule.plannedStart)}</td>
       <td className="whitespace-nowrap px-3 py-2 text-slate-600">{formatDate(a.schedule.plannedEnd)}</td>

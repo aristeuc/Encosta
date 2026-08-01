@@ -40,6 +40,23 @@ export async function updateActivityResponsibleAction(formData: FormData) {
   revalidatePath(`/projects/${projectId}`);
 }
 
+export async function updateActivityDetailsAction(formData: FormData) {
+  const activityId = String(formData.get("activityId") ?? "");
+  const projectId = String(formData.get("projectId") ?? "");
+  if (!activityId || !projectId) return;
+
+  const durationRaw = Number(formData.get("durationDays"));
+  const durationDays = Number.isFinite(durationRaw) && durationRaw > 0 ? Math.round(durationRaw) : 1;
+  const externalEntity = String(formData.get("externalEntity") ?? "").trim() || null;
+
+  await prisma.projectActivity.update({
+    where: { id: activityId },
+    data: { durationDays, externalEntity },
+  });
+
+  revalidatePath(`/projects/${projectId}`);
+}
+
 export interface CreateDriveFolderState {
   error?: string;
 }

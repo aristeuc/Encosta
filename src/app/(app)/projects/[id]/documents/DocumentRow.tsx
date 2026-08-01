@@ -10,10 +10,12 @@ export function DocumentRow({
   projectId,
   document,
   hasDriveFolder,
+  users,
 }: {
   projectId: string;
   document: ProjectDocument;
   hasDriveFolder: boolean;
+  users: { id: string; name: string }[];
 }) {
   const formRef = useRef<HTMLFormElement>(null);
   const formId = `doc-form-${document.id}`;
@@ -28,7 +30,23 @@ export function DocumentRow({
           <input type="hidden" name="projectId" value={projectId} />
         </form>
       </td>
-      <td className="px-4 py-2 text-slate-500">{document.owner ?? "—"}</td>
+      <td className="px-4 py-2">
+        <select
+          key={`resp-${document.responsibleUserId ?? ""}`}
+          form={formId}
+          name="responsibleUserId"
+          defaultValue={document.responsibleUserId ?? ""}
+          onChange={submit}
+          className="rounded border border-slate-200 bg-white px-1.5 py-1 text-xs"
+        >
+          <option value="">— sem responsável —</option>
+          {users.map((u) => (
+            <option key={u.id} value={u.id}>
+              {u.name}
+            </option>
+          ))}
+        </select>
+      </td>
       <td className="px-4 py-2">
         <span
           className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${

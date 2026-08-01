@@ -63,6 +63,7 @@ export async function createProjectAction(
             projectActivityId: activity.id,
             description: d.description,
             owner: d.owner,
+            responsibleUserId: d.owner ? (userByName.get(d.owner.trim().toLowerCase()) ?? null) : null,
             mandatory: d.mandatory,
             orderIndex: d.orderIndex,
           })),

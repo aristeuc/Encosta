@@ -16,6 +16,8 @@ export default async function ProjectDocumentsPage({ params }: { params: Promise
   });
   if (!project) notFound();
 
+  const users = await prisma.user.findMany({ orderBy: { name: "asc" } });
+
   return (
     <div className="space-y-6">
       <div>
@@ -66,7 +68,7 @@ export default async function ProjectDocumentsPage({ params }: { params: Promise
                   <thead className="text-left text-xs uppercase tracking-wide text-slate-400">
                     <tr>
                       <th className="px-4 py-2">Documento</th>
-                      <th className="px-4 py-2">Quem obtém</th>
+                      <th className="px-4 py-2">Responsável interno</th>
                       <th className="px-4 py-2">Obrigatório</th>
                       <th className="px-4 py-2">Estado</th>
                       <th className="px-4 py-2">Data obtida</th>
@@ -81,6 +83,7 @@ export default async function ProjectDocumentsPage({ params }: { params: Promise
                         projectId={project.id}
                         document={doc}
                         hasDriveFolder={Boolean(project.driveFolderId)}
+                        users={users}
                       />
                     ))}
                   </tbody>

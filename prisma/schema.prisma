@@ -26,6 +26,7 @@ model User {
   createdAt     DateTime @default(now())
 
   responsibleActivities ProjectActivity[]  @relation("InternalResponsible")
+  responsibleDocuments  ProjectDocument[]
   projectMemberships    ProjectMember[]
   notificationLogs      NotificationLog[]
 }
@@ -135,18 +136,20 @@ enum DocumentStatus {
 }
 
 model ProjectDocument {
-  id                String         @id @default(cuid())
-  projectActivityId String
-  projectActivity   ProjectActivity @relation(fields: [projectActivityId], references: [id], onDelete: Cascade)
-  description       String
-  owner             String?
-  mandatory         Boolean        @default(true)
-  status            DocumentStatus @default(PENDENTE)
-  obtainedDate      DateTime?      @db.Date
-  notes             String?
-  driveFileId       String?
-  driveFileUrl      String?
-  orderIndex        Int
+  id                  String          @id @default(cuid())
+  projectActivityId   String
+  projectActivity     ProjectActivity @relation(fields: [projectActivityId], references: [id], onDelete: Cascade)
+  description         String
+  owner               String? // legacy free-text suggestion copied from the template; superseded by responsibleUserId
+  responsibleUserId   String?
+  responsibleUser     User?           @relation(fields: [responsibleUserId], references: [id], onDelete: SetNull)
+  mandatory           Boolean         @default(true)
+  status              DocumentStatus  @default(PENDENTE)
+  obtainedDate        DateTime?       @db.Date
+  notes               String?
+  driveFileId         String?
+  driveFileUrl        String?
+  orderIndex          Int
 }
 
 // ---------------------------------------------------------------------------
