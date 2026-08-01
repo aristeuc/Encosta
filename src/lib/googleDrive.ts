@@ -9,10 +9,26 @@ function isConfigured(): boolean {
   );
 }
 
-function getAuth() {
-  const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!;
+function normalizePrivateKey(raw: string): string {
+  let key = raw.trim();
+  // Strip a surrounding pair of quotes some users leave in when pasting the
+  // JSON key file's "private_key" field value (including the quotes).
+  if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+    key = key.slice(1, -1);
+  }
   // Private keys are usually stored in env vars with literal "\n" — convert back to real newlines.
-  const key = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY!.replace(/\\n/g, "\n");
+  key = key.replace(/\\n/g, "\n").replace(/\\r/g, "");
+  return key;
+}
+
+function getAuth() {
+  const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!.trim();
+  const key = normalizePrivateKey(process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY!);
+  if (!key.includes("BEGIN PRIVATE KEY")) {
+    throw new Error(
+      'A chave privada da conta de serviço (GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY) não parece válida — tem de começar por "-----BEGIN PRIVATE KEY-----". Confirme que colou o valor completo do campo "private_key" do ficheiro JSON descarregado da Google.',
+    );
+  }
   return new google.auth.JWT({
     email,
     key,
