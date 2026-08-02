@@ -49,6 +49,18 @@ function getDrive() {
   return google.drive({ version: "v3", auth: getAuth() });
 }
 
+/**
+ * Accepts either a bare Drive file/folder ID or a full Drive URL (with or
+ * without query string, e.g. ".../folders/<id>?usp=drive_link") and returns
+ * just the ID — pasting the whole link is a common mistake.
+ */
+function normalizeFolderId(raw: string): string {
+  const trimmed = raw.trim();
+  const match = trimmed.match(/\/folders\/([a-zA-Z0-9_-]+)/) ?? trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (match) return match[1];
+  return trimmed.split("?")[0].split("/").filter(Boolean).pop() ?? trimmed;
+}
+
 export interface DriveFolderResult {
   ok: boolean;
   id?: string;
@@ -62,7 +74,7 @@ export async function createProjectFolder(projectName: string): Promise<DriveFol
   }
   try {
     const drive = getDrive();
-    const rootFolderId = process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID!;
+    const rootFolderId = normalizeFolderId(process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID!);
     const res = await drive.files.create({
       requestBody: {
         name: projectName,
