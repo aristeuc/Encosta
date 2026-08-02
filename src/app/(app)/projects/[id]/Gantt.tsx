@@ -1,6 +1,7 @@
 import type { ProjectActivityWithSchedule } from "@/lib/schedule";
 
 const MONTH_ABBREV = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const LABEL_WIDTH = 224;
 
 function formatMonthLabel(date: Date): string {
   // Avoid Intl.DateTimeFormat's locale month names here: on some server
@@ -37,23 +38,27 @@ export function Gantt({
   const pct = (date: Date) => Math.min(100, Math.max(0, ((date.getTime() - rangeStart.getTime()) / 86400000 / totalDays) * 100));
   // Each month label needs real breathing room, or adjacent ones overlap —
   // a fixed-width timeline packs dozens of months into the same 900px
-  // regardless of how many there are.
-  const timelineWidth = Math.max(900, months.length * 56);
+  // regardless of how many there are. This is the width of the bars area
+  // alone; the activity-name column below is added on top of it.
+  const barsWidth = Math.max(900 - LABEL_WIDTH, months.length * 56);
 
   return (
     <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div style={{ minWidth: timelineWidth }}>
-        <div className="relative mb-2 flex border-b border-slate-200 pb-1 text-[11px] text-slate-400">
-          {months.map((m) => (
-            <div
-              key={m.toISOString()}
-              className="absolute -translate-x-1/2 whitespace-nowrap"
-              style={{ left: `${pct(m)}%` }}
-            >
-              {formatMonthLabel(m)}
-            </div>
-          ))}
-          <div className="invisible">.</div>
+      <div style={{ minWidth: LABEL_WIDTH + barsWidth }}>
+        {/* The month header's spacer must match the activity-label column
+            width exactly, otherwise the month ticks (positioned relative to
+            the bars area only) drift out of alignment with the bars
+            themselves as the label column's width changes. */}
+        <div className="mb-2 flex border-b border-slate-200 pb-1 text-[11px] text-slate-400">
+          <div style={{ width: LABEL_WIDTH }} className="shrink-0" />
+          <div className="relative flex-1">
+            {months.map((m) => (
+              <div key={m.toISOString()} className="absolute -translate-x-1/2 whitespace-nowrap" style={{ left: `${pct(m)}%` }}>
+                {formatMonthLabel(m)}
+              </div>
+            ))}
+            <div className="invisible">.</div>
+          </div>
         </div>
         <div className="space-y-1.5 pt-4">
           {activities.map((a) => {
@@ -67,7 +72,11 @@ export function Gantt({
 
             return (
               <div key={a.id} className="flex items-center gap-2 text-xs">
-                <div className="w-40 shrink-0 truncate text-slate-600" title={`${a.code} — ${a.activity}`}>
+                <div
+                  style={{ width: LABEL_WIDTH }}
+                  className="sticky left-0 z-10 shrink-0 whitespace-normal break-words bg-white pr-2 leading-tight text-slate-600"
+                  title={`${a.code} — ${a.activity}`}
+                >
                   <span className="font-mono text-[10px] text-slate-400">{a.code}</span> {a.activity}
                 </div>
                 <div className="relative h-4 flex-1 rounded bg-slate-50">
