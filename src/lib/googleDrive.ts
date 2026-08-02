@@ -9,6 +9,9 @@ function isConfigured(): boolean {
   );
 }
 
+const LINE_SEPARATORS = new RegExp("[\\u2028\\u2029]", "g");
+const ZERO_WIDTH_CHARS = new RegExp("[\\u200B\\u200C\\u200D\\uFEFF]", "g");
+
 function normalizePrivateKey(raw: string): string {
   let key = raw.trim();
   // Strip a surrounding pair of quotes some users leave in when pasting the
@@ -18,6 +21,12 @@ function normalizePrivateKey(raw: string): string {
   }
   // Private keys are usually stored in env vars with literal "\n" — convert back to real newlines.
   key = key.replace(/\\n/g, "\n").replace(/\\r/g, "");
+  // Pasting multi-line text out of a web page (e.g. a browser-rendered chat
+  // message) instead of the original file often turns real newlines into
+  // U+2028/U+2029 line separators, leaves \r\n behind, or sneaks in
+  // zero-width characters — all invisible in a textarea but fatal to a PEM
+  // parser.
+  key = key.replace(LINE_SEPARATORS, "\n").replace(/\r\n?/g, "\n").replace(ZERO_WIDTH_CHARS, "");
   return key;
 }
 
