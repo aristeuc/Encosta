@@ -1,5 +1,16 @@
 import type { ProjectActivityWithSchedule } from "@/lib/schedule";
 
+const MONTH_ABBREV = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+
+function formatMonthLabel(date: Date): string {
+  // Avoid Intl.DateTimeFormat's locale month names here: on some server
+  // runtimes without full ICU data, "pt-PT"/{month:"short"} silently falls
+  // back to a plain numeric month, which reads like an ambiguous MM/YY date.
+  const month = MONTH_ABBREV[date.getUTCMonth()];
+  const year = String(date.getUTCFullYear()).slice(-2);
+  return `${month}/${year}`;
+}
+
 function monthsBetween(start: Date, end: Date): Date[] {
   const months: Date[] = [];
   let cur = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), 1));
@@ -24,18 +35,22 @@ export function Gantt({
   const months = monthsBetween(rangeStart, rangeEnd);
 
   const pct = (date: Date) => Math.min(100, Math.max(0, ((date.getTime() - rangeStart.getTime()) / 86400000 / totalDays) * 100));
+  // Each month label needs real breathing room, or adjacent ones overlap —
+  // a fixed-width timeline packs dozens of months into the same 900px
+  // regardless of how many there are.
+  const timelineWidth = Math.max(900, months.length * 56);
 
   return (
     <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="min-w-[900px]">
+      <div style={{ minWidth: timelineWidth }}>
         <div className="relative mb-2 flex border-b border-slate-200 pb-1 text-[11px] text-slate-400">
           {months.map((m) => (
             <div
               key={m.toISOString()}
-              className="absolute -translate-x-1/2"
+              className="absolute -translate-x-1/2 whitespace-nowrap"
               style={{ left: `${pct(m)}%` }}
             >
-              {new Intl.DateTimeFormat("pt-PT", { month: "short", year: "2-digit" }).format(m)}
+              {formatMonthLabel(m)}
             </div>
           ))}
           <div className="invisible">.</div>
