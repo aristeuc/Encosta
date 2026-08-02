@@ -132,6 +132,7 @@ model ProjectActivity {
 
 enum DocumentStatus {
   PENDENTE
+  EM_ANDAMENTO
   OBTIDO
 }
 

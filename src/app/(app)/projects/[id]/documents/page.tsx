@@ -64,30 +64,33 @@ export default async function ProjectDocumentsPage({ params }: { params: Promise
               {activity.documents.length === 0 ? (
                 <p className="px-4 py-3 text-xs text-slate-400">Sem documentos associados.</p>
               ) : (
-                <table className="min-w-full divide-y divide-slate-100 text-sm">
-                  <thead className="text-left text-xs uppercase tracking-wide text-slate-400">
-                    <tr>
-                      <th className="px-4 py-2">Documento</th>
-                      <th className="px-4 py-2">Responsável interno</th>
-                      <th className="px-4 py-2">Obrigatório</th>
-                      <th className="px-4 py-2">Estado</th>
-                      <th className="px-4 py-2">Data obtida</th>
-                      <th className="px-4 py-2">Google Drive</th>
-                      <th className="px-4 py-2">Observações</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-50">
-                    {activity.documents.map((doc) => (
-                      <DocumentRow
-                        key={doc.id}
-                        projectId={project.id}
-                        document={doc}
-                        hasDriveFolder={Boolean(project.driveFolderId)}
-                        users={users}
-                      />
-                    ))}
-                  </tbody>
-                </table>
+                <div className="overflow-x-auto rounded-b-xl">
+                  <table className="min-w-full divide-y divide-slate-100 text-sm">
+                    <thead className="text-left text-xs uppercase tracking-wide text-slate-400">
+                      <tr>
+                        <th className="px-4 py-2">Documento</th>
+                        <th className="px-4 py-2">Responsável interno</th>
+                        <th className="px-4 py-2">Obrigatório</th>
+                        <th className="px-4 py-2">Estado</th>
+                        <th className="px-4 py-2">Data obtida</th>
+                        <th className="px-4 py-2">Carregar ficheiro</th>
+                        <th className="px-4 py-2">Ver no Drive</th>
+                        <th className="px-4 py-2">Observações</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-50">
+                      {activity.documents.map((doc) => (
+                        <DocumentRow
+                          key={doc.id}
+                          projectId={project.id}
+                          document={doc}
+                          hasDriveFolder={Boolean(project.driveFolderId)}
+                          users={users}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               )}
             </section>
           );

@@ -67,10 +67,15 @@ export function DocumentRow({
           defaultValue={document.status}
           onChange={submit}
           className={`rounded border px-1.5 py-1 text-xs ${
-            document.status === "OBTIDO" ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 bg-white"
+            document.status === "OBTIDO"
+              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+              : document.status === "EM_ANDAMENTO"
+                ? "border-amber-200 bg-amber-50 text-amber-700"
+                : "border-slate-200 bg-white"
           }`}
         >
           <option value="PENDENTE">Pendente</option>
+          <option value="EM_ANDAMENTO">Em andamento</option>
           <option value="OBTIDO">Obtido</option>
         </select>
       </td>
@@ -86,22 +91,25 @@ export function DocumentRow({
         />
       </td>
       <td className="px-4 py-2">
-        <DriveCell
-          projectId={projectId}
-          documentId={document.id}
-          driveFileUrl={document.driveFileUrl}
-          hasDriveFolder={hasDriveFolder}
-        />
-        <input
-          key={`drive-${document.driveFileUrl}`}
-          type="url"
-          form={formId}
-          name="driveFileUrl"
-          placeholder="ou colar link manualmente"
-          defaultValue={document.driveFileUrl ?? ""}
-          onBlur={submit}
-          className="mt-1 block w-40 rounded border border-slate-200 px-1.5 py-1 text-[11px]"
-        />
+        <DriveCell projectId={projectId} documentId={document.id} hasDriveFolder={hasDriveFolder} />
+      </td>
+      <td className="px-4 py-2">
+        {document.driveFileUrl ? (
+          <a href={document.driveFileUrl} target="_blank" rel="noreferrer" className="text-xs text-sky-700 underline">
+            Abrir ficheiro ↗
+          </a>
+        ) : (
+          <input
+            key={`drive-${document.driveFileUrl}`}
+            type="url"
+            form={formId}
+            name="driveFileUrl"
+            placeholder="colar link do Drive"
+            defaultValue=""
+            onBlur={submit}
+            className="w-40 rounded border border-slate-200 px-1.5 py-1 text-xs"
+          />
+        )}
       </td>
       <td className="px-4 py-2">
         <input
