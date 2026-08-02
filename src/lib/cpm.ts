@@ -95,11 +95,21 @@ export function computeSchedule(
       if (indegree.get(s) === 0) queue.push(s);
     }
   }
+  const orderSet = new Set(order);
+  let cycleCodes: string[] = [];
   if (order.length < activities.length) {
-    const missing = activities.map((a) => a.code).filter((c) => !order.includes(c));
-    errors.push({ code: missing.join(", "), message: "Ciclo de dependências detetado — verifique os precedentes." });
-    for (const c of missing) order.push(c);
+    cycleCodes = activities.map((a) => a.code).filter((c) => !orderSet.has(c));
+    errors.push({ code: cycleCodes.join(", "), message: "Ciclo de dependências detetado — verifique os precedentes." });
+    // Deliberately NOT added to `order`: CPM math is undefined for a cyclic
+    // graph, and appending them in arbitrary order previously crashed the
+    // forward/backward passes (they'd read another unprocessed cycle
+    // member's date as if it were already computed). They get a safe
+    // placeholder result below instead.
   }
+
+  /** A node's successors, restricted to ones that were actually scheduled
+   *  (excludes any successor caught in a dependency cycle). */
+  const scheduledSuccessors = (code: string) => (successors.get(code) ?? []).filter((s) => orderSet.has(s));
 
   const projectStart = toDateOnlyUTC(projectStartDate);
   const earlyStart = new Map<string, Date>();
@@ -136,7 +146,7 @@ export function computeSchedule(
     const a = byCode.get(code);
     if (!a) continue;
     const duration = Math.max(a.durationDays, 1);
-    const succs = successors.get(code) ?? [];
+    const succs = scheduledSuccessors(code);
     let lf: Date;
     if (succs.length === 0) {
       lf = projectEnd!;
@@ -155,6 +165,20 @@ export function computeSchedule(
   }
 
   const todayOnly = toDateOnlyUTC(today);
+
+  function statusAndDeviation(a: CpmActivityInput, es: Date, ef: Date): { status: ActivityStatus; deviationDays: number | null } {
+    if (a.actualEnd) {
+      return { status: "CONCLUIDO", deviationDays: calendarDaysBetween(ef, a.actualEnd) };
+    }
+    if (a.actualStart) {
+      return { status: "EM_CURSO", deviationDays: null };
+    }
+    if (todayOnly > es) {
+      return { status: "EM_ATRASO_INICIO", deviationDays: null };
+    }
+    return { status: "NAO_INICIADO", deviationDays: null };
+  }
+
   const results: Record<string, CpmActivityResult> = {};
   for (const code of order) {
     const a = byCode.get(code);
@@ -165,23 +189,10 @@ export function computeSchedule(
     const ls = lateStart.get(code)!;
     const totalFloat = businessDaysBetween(ef, lf, holidaySet);
 
-    const succs = successors.get(code) ?? [];
+    const succs = scheduledSuccessors(code);
     const freeFloat = succs.length
       ? succs.map((s) => businessDaysBetween(ef, earlyStart.get(s)!, holidaySet)).reduce((min, v) => (v < min ? v : min))
       : totalFloat;
-
-    let status: ActivityStatus;
-    let deviationDays: number | null = null;
-    if (a.actualEnd) {
-      status = "CONCLUIDO";
-      deviationDays = calendarDaysBetween(ef, a.actualEnd);
-    } else if (a.actualStart) {
-      status = "EM_CURSO";
-    } else if (todayOnly > es) {
-      status = "EM_ATRASO_INICIO";
-    } else {
-      status = "NAO_INICIADO";
-    }
 
     results[code] = {
       code,
@@ -192,8 +203,28 @@ export function computeSchedule(
       totalFloatDays: totalFloat,
       freeFloatDays: freeFloat,
       isCritical: totalFloat === 0,
-      status,
-      deviationDays,
+      ...statusAndDeviation(a, es, ef),
+    };
+  }
+
+  // Activities caught in a dependency cycle can't get real CPM dates — give
+  // them an inert placeholder (flagged critical, zero float) so the rest of
+  // the app can still render a row for every activity instead of crashing
+  // on a missing lookup.
+  for (const code of cycleCodes) {
+    const a = byCode.get(code);
+    if (!a) continue;
+    const placeholder = projectStart;
+    results[code] = {
+      code,
+      plannedStart: placeholder,
+      plannedEnd: placeholder,
+      lateStart: placeholder,
+      lateFinish: placeholder,
+      totalFloatDays: 0,
+      freeFloatDays: 0,
+      isCritical: true,
+      ...statusAndDeviation(a, placeholder, placeholder),
     };
   }
 

@@ -48,10 +48,15 @@ export async function updateActivityDetailsAction(formData: FormData) {
   const durationRaw = Number(formData.get("durationDays"));
   const durationDays = Number.isFinite(durationRaw) && durationRaw > 0 ? Math.round(durationRaw) : 1;
   const externalEntity = String(formData.get("externalEntity") ?? "").trim() || null;
+  const predecessorCodes = String(formData.get("predecessorCodes") ?? "")
+    .split(",")
+    .map((code) => code.trim().toUpperCase())
+    .filter(Boolean)
+    .join(",");
 
   await prisma.projectActivity.update({
     where: { id: activityId },
-    data: { durationDays, externalEntity },
+    data: { durationDays, externalEntity, predecessorCodes },
   });
 
   revalidatePath(`/projects/${projectId}`);

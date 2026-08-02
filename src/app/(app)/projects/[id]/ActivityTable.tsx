@@ -33,6 +33,7 @@ export function ActivityTable({
             <th className="px-3 py-2">Responsável</th>
             <th className="px-3 py-2">Entidade externa</th>
             <th className="px-3 py-2">Duração (dias)</th>
+            <th className="px-3 py-2">Precedentes</th>
             <th className="px-3 py-2">Início previsto</th>
             <th className="px-3 py-2">Fim previsto</th>
             <th className="px-3 py-2">Início real</th>
@@ -122,6 +123,18 @@ function ActivityRow({
           defaultValue={a.durationDays}
           onBlur={() => detailsFormRef.current?.requestSubmit()}
           className="w-16 rounded border border-slate-200 px-1.5 py-1 text-xs"
+        />
+      </td>
+      <td className="px-3 py-2">
+        <input
+          key={`preds-${a.predecessorCodes}`}
+          type="text"
+          form={detailsFormId}
+          name="predecessorCodes"
+          placeholder="ex.: L01, M02"
+          defaultValue={a.predecessorCodes}
+          onBlur={() => detailsFormRef.current?.requestSubmit()}
+          className="w-28 rounded border border-slate-200 px-1.5 py-1 text-xs"
         />
       </td>
       <td className="whitespace-nowrap px-3 py-2 text-slate-600">{formatDate(a.schedule.plannedStart)}</td>

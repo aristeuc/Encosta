@@ -27,6 +27,32 @@ describe("computeSchedule — basic chain", () => {
     expect(result.errors.length).toBeGreaterThan(0);
   });
 
+  it("flags a dependency cycle without crashing, and still schedules unrelated activities", () => {
+    // A -> B -> C -> A is a cycle; D depends on A and should still be
+    // unaffected in the sense that computing it doesn't throw, even though
+    // it can't get a real date either since its only predecessor is broken.
+    // Z is completely independent of the cycle and must schedule normally.
+    const activities: CpmActivityInput[] = [
+      { code: "A", durationDays: 5, predecessorCodes: ["C"], lagDays: 0 },
+      { code: "B", durationDays: 5, predecessorCodes: ["A"], lagDays: 0 },
+      { code: "C", durationDays: 5, predecessorCodes: ["B"], lagDays: 0 },
+      { code: "Z", durationDays: 10, predecessorCodes: [], lagDays: 0 },
+    ];
+    const result = computeSchedule(activities, new Date("2026-08-03T00:00:00Z"), []);
+
+    expect(result.errors.length).toBeGreaterThan(0);
+    expect(result.errors[0].message).toContain("Ciclo de dependências");
+
+    // Every activity still gets a result object — nothing crashes and
+    // nothing is silently dropped from the response.
+    expect(result.activities.A).toBeDefined();
+    expect(result.activities.B).toBeDefined();
+    expect(result.activities.C).toBeDefined();
+
+    // The unrelated activity is completely unaffected by the cycle.
+    expect(result.activities.Z.plannedEnd.toISOString().slice(0, 10)).toBe("2026-08-14");
+  });
+
   it("marks a single-chain activity as critical (zero float)", () => {
     const activities: CpmActivityInput[] = [
       { code: "A", durationDays: 5, predecessorCodes: [], lagDays: 0 },
