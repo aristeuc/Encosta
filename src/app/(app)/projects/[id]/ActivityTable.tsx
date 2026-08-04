@@ -171,6 +171,14 @@ function ActivityRow({
         <span className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${STATUS_STYLES[a.schedule.status]}`}>
           {ACTIVITY_STATUS_LABELS[a.schedule.status]}
         </span>
+        {a.actualEnd && a.documentsMissing > 0 && (
+          <span
+            className="ml-1 rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-700"
+            title="A data de Fim Real já foi preenchida, mas ainda faltam documentos obrigatórios para dar a atividade por concluída."
+          >
+            faltam docs
+          </span>
+        )}
         {a.schedule.isCritical && (
           <span className="ml-1 rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-medium text-red-700">
             CRÍTICO

@@ -58,6 +58,13 @@ export async function getProjectWithSchedule(projectId: string) {
   const activities: ProjectActivityWithSchedule[] = project.activities.map((a) => {
     const mandatoryDocs = a.documents.filter((d) => d.mandatory);
     const missing = mandatoryDocs.filter((d) => d.status !== "OBTIDO");
+    const rawSchedule = cpmResult.activities[a.code];
+    // A "Fim Real" date alone doesn't close out an activity — the documents
+    // it's meant to produce have to be obtained too, otherwise the app
+    // (dashboard counts, notifications, everywhere else that reads
+    // `status`) would treat it as done while paperwork is still pending.
+    const schedule: CpmActivityResult =
+      rawSchedule.status === "CONCLUIDO" && missing.length > 0 ? { ...rawSchedule, status: "EM_CURSO" } : rawSchedule;
     return {
       id: a.id,
       code: a.code,
@@ -73,7 +80,7 @@ export async function getProjectWithSchedule(projectId: string) {
       orderIndex: a.orderIndex,
       actualStart: a.actualStart,
       actualEnd: a.actualEnd,
-      schedule: cpmResult.activities[a.code],
+      schedule,
       documentsTotal: mandatoryDocs.length,
       documentsMissing: missing.length,
     };
